@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "John",
+      "houseNo": "1A"
+    },
+    {
+      "id": 2,
+      "name": "Alex",
+      "houseNo": "1B"
+    },
+    {
+      "id": 3,
+      "name": "Jim",
+      "houseNo": "2A"
+    }
+  ],
+  "session": {
+    "loggedIn": false
+  }
+}
