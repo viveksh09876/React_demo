@@ -1,37 +1,34 @@
 import React, { useState, useEffect } from 'react'
-import { checkLogin, logoutUser, loginUser } from '../../services/userService'
 
-const UserComponent = () => {
+const UserComponent = (props) => {
+    const {
+        login, logout, checkLoginStatus
+    } = props,
+    [isLoggedIn, setIsLoggedIn] = useState(false),
+    loginUser = () => {
+        setIsLoggedIn(login())
+    },
+    logoutUser = () => {
+        setIsLoggedIn(logout())
+    }
     console.log("child render");
-    const [isLoggedIn, setIsLoggedIn] = useState(false),
-        checkLoginStatus = () => {
-            checkLogin().then(result => {
-                setIsLoggedIn(result.loggedIn);
-            })
-        },
-        logout = () => {
-            logoutUser().then(result => {
-                console.log(result)
-            })
-        },
-        login = () => {
-            loginUser().then(result => {
-                console.log(result)
-            })
-        }
+    
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            checkLoginStatus();
-        }, 5000);
-        return () => clearInterval(interval)
-    }, [])
+        console.log('useEffect run')
+        setIsLoggedIn(checkLoginStatus());
+        // const interval = setInterval(() => {
+        //     const loginStatus = checkLoginStatus();
+        //     setIsLoggedIn(loginStatus)
+        // }, 5000);
+        // return () => clearInterval(interval)
+    }, [checkLoginStatus])
     return (
         <div>
             <div>UserComponent</div>
             <div>Is Logged In: {isLoggedIn ? 'true' : 'false'}</div>
-            <div><button onClick={logout}>Logout</button></div>
-            <div><button onClick={login}>Login</button></div>
+            <div><button onClick={logoutUser}>Logout</button></div>
+            <div><button onClick={loginUser}>Login</button></div>
         </div>
         
     )

@@ -18,5 +18,8 @@
   ],
   "session": {
     "loggedIn": false
+  },
+  "clickCount": {
+    "count": 0
   }
 }
