@@ -1,41 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { checkLogin, logoutUser, loginUser } from '../../services/userService'
 import UserComponent from '../../components/UserComponent/UserComponent'
+import './dashboard.css'
 
 const Dashboard = () => {
     const [count, setCount] = useState(0),
-    checkLoginStatus = () => {
-        checkLogin().then(result => {
-            return result.loggedIn;
-        })
-    },
-    logout = () => {
-        logoutUser().then(result => {
-            console.log(result.loggedIn)
-            return result.loggedIn;
-        })
-    },
-    login = () => {
-        loginUser().then(result => {
-            console.log(result.loggedIn)
-            return result.loggedIn;
-        })
-    },
-    updateCount = () => {
-        setCount(prevCount => prevCount + 1)
-    }
+        [lightTheme, setLightTheme] = useState(true),
+        updateCount = () => {
+            console.log('Update count called');
+            return count+1;
+        },
+        updateTheme = () => {
+            console.log('Update theme called');
+            setLightTheme(!lightTheme);
+        }
+    
     console.log('Parent render')
 
     return (
-        <div>
+        <div className={lightTheme ? 'light': 'dark'}>
             <div>Dashboard</div>
+            <button onClick={updateTheme}>Update Theme</button>
             <UserComponent 
-                login={login}
-                logout={logout}
-                checkLoginStatus={checkLoginStatus}
+                updateCount={updateCount}
             />
-            <div>Count: {count}</div>
-            <button onClick={updateCount}>Update Count</button>
         </div>
         
     )
